@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.16
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CompressionEngineLib", "CompressionEngineLib\CompressionEngineLib.vcxproj", "{79676266-322A-4A7A-B49E-4368DF79F2D2}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CompressionEngineTest", "CompressionEngineTest\CompressionEngineTest.vcxproj", "{9FE217E3-2A57-4CE6-A8E1-758D58A28A2B}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pyCompressionEngine", "pyCompressionEngine\pyCompressionEngine.vcxproj", "{E5E2D6A3-BB75-472E-B796-2D43EC99CB14}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{79676266-322A-4A7A-B49E-4368DF79F2D2}.Debug|x64.ActiveCfg = Debug|x64
+		{79676266-322A-4A7A-B49E-4368DF79F2D2}.Debug|x64.Build.0 = Debug|x64
+		{79676266-322A-4A7A-B49E-4368DF79F2D2}.Debug|x86.ActiveCfg = Debug|Win32
+		{79676266-322A-4A7A-B49E-4368DF79F2D2}.Debug|x86.Build.0 = Debug|Win32
+		{79676266-322A-4A7A-B49E-4368DF79F2D2}.Release|x64.ActiveCfg = Release|x64
+		{79676266-322A-4A7A-B49E-4368DF79F2D2}.Release|x64.Build.0 = Release|x64
+		{79676266-322A-4A7A-B49E-4368DF79F2D2}.Release|x86.ActiveCfg = Release|Win32
+		{79676266-322A-4A7A-B49E-4368DF79F2D2}.Release|x86.Build.0 = Release|Win32
+		{9FE217E3-2A57-4CE6-A8E1-758D58A28A2B}.Debug|x64.ActiveCfg = Debug|x64
+		{9FE217E3-2A57-4CE6-A8E1-758D58A28A2B}.Debug|x64.Build.0 = Debug|x64
+		{9FE217E3-2A57-4CE6-A8E1-758D58A28A2B}.Debug|x86.ActiveCfg = Debug|Win32
+		{9FE217E3-2A57-4CE6-A8E1-758D58A28A2B}.Debug|x86.Build.0 = Debug|Win32
+		{9FE217E3-2A57-4CE6-A8E1-758D58A28A2B}.Release|x64.ActiveCfg = Release|x64
+		{9FE217E3-2A57-4CE6-A8E1-758D58A28A2B}.Release|x64.Build.0 = Release|x64
+		{9FE217E3-2A57-4CE6-A8E1-758D58A28A2B}.Release|x86.ActiveCfg = Release|Win32
+		{9FE217E3-2A57-4CE6-A8E1-758D58A28A2B}.Release|x86.Build.0 = Release|Win32
+		{E5E2D6A3-BB75-472E-B796-2D43EC99CB14}.Debug|x64.ActiveCfg = Debug|x64
+		{E5E2D6A3-BB75-472E-B796-2D43EC99CB14}.Debug|x64.Build.0 = Debug|x64
+		{E5E2D6A3-BB75-472E-B796-2D43EC99CB14}.Debug|x86.ActiveCfg = Debug|Win32
+		{E5E2D6A3-BB75-472E-B796-2D43EC99CB14}.Debug|x86.Build.0 = Debug|Win32
+		{E5E2D6A3-BB75-472E-B796-2D43EC99CB14}.Release|x64.ActiveCfg = Release|x64
+		{E5E2D6A3-BB75-472E-B796-2D43EC99CB14}.Release|x64.Build.0 = Release|x64
+		{E5E2D6A3-BB75-472E-B796-2D43EC99CB14}.Release|x86.ActiveCfg = Release|Win32
+		{E5E2D6A3-BB75-472E-B796-2D43EC99CB14}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

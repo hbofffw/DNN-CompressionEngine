@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ArithmeticCodec">
+      <UniqueIdentifier>{03808b80-37d2-4948-9146-19190227656b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="binaryDSC">
+      <UniqueIdentifier>{babcda82-6754-4abc-b1d4-2701e6cc50e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="nonbinaryDSC">
+      <UniqueIdentifier>{41a46421-7cd8-44e5-9994-f01bef289a82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quantizer">
+      <UniqueIdentifier>{a1938661-e622-42ca-883a-a1310814216f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ArithmeticCoding\ArithmeticDecoder.cpp">
+      <Filter>ArithmeticCodec</Filter>
+    </ClCompile>
+    <ClCompile Include="ArithmeticCoding\ArithmeticEncoder.cpp">
+      <Filter>ArithmeticCodec</Filter>
+    </ClCompile>
+    <ClCompile Include="ArithmeticCoding\FrequencyTable.cpp">
+      <Filter>ArithmeticCodec</Filter>
+    </ClCompile>
+    <ClCompile Include="binaryDISCUS\BinaryNode.cpp">
+      <Filter>binaryDSC</Filter>
+    </ClCompile>
+    <ClCompile Include="binaryDISCUS\BinaryDSC.cpp">
+      <Filter>binaryDSC</Filter>
+    </ClCompile>
+    <ClCompile Include="nonbinaryDISCUS\GaloisField.cpp">
+      <Filter>nonbinaryDSC</Filter>
+    </ClCompile>
+    <ClCompile Include="nonbinaryDISCUS\Node.cpp">
+      <Filter>nonbinaryDSC</Filter>
+    </ClCompile>
+    <ClCompile Include="nonbinaryDISCUS\NonbinaryDSC.cpp">
+      <Filter>nonbinaryDSC</Filter>
+    </ClCompile>
+    <ClCompile Include="EncoderEngine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Quantizer\Quantizer.cpp">
+      <Filter>Quantizer</Filter>
+    </ClCompile>
+    <ClCompile Include="DecoderEngine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="General.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ArithmeticCoding\ACdefinitions.h">
+      <Filter>ArithmeticCodec</Filter>
+    </ClInclude>
+    <ClInclude Include="ArithmeticCoding\ArithmeticDecoder.h">
+      <Filter>ArithmeticCodec</Filter>
+    </ClInclude>
+    <ClInclude Include="ArithmeticCoding\ArithmeticEncoder.h">
+      <Filter>ArithmeticCodec</Filter>
+    </ClInclude>
+    <ClInclude Include="ArithmeticCoding\FrequencyTable.h">
+      <Filter>ArithmeticCodec</Filter>
+    </ClInclude>
+    <ClInclude Include="binaryDISCUS\BinaryDSC.h">
+      <Filter>binaryDSC</Filter>
+    </ClInclude>
+    <ClInclude Include="binaryDISCUS\bDSCdefinitions.h">
+      <Filter>binaryDSC</Filter>
+    </ClInclude>
+    <ClInclude Include="binaryDISCUS\BinaryNode.h">
+      <Filter>binaryDSC</Filter>
+    </ClInclude>
+    <ClInclude Include="nonbinaryDISCUS\GaloisField.h">
+      <Filter>nonbinaryDSC</Filter>
+    </ClInclude>
+    <ClInclude Include="nonbinaryDISCUS\nDSCdefinitions.h">
+      <Filter>nonbinaryDSC</Filter>
+    </ClInclude>
+    <ClInclude Include="nonbinaryDISCUS\Node.h">
+      <Filter>nonbinaryDSC</Filter>
+    </ClInclude>
+    <ClInclude Include="nonbinaryDISCUS\NonbinaryDSC.h">
+      <Filter>nonbinaryDSC</Filter>
+    </ClInclude>
+    <ClInclude Include="EncoderEngine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Quantizer\Quantizer.h">
+      <Filter>Quantizer</Filter>
+    </ClInclude>
+    <ClInclude Include="DecoderEngine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
