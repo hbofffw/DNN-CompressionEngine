@@ -2,11 +2,11 @@
 
 #include "General.h"
 
-class DecoderEngine
+class CDecoderEngine
 {
 public:
-	DecoderEngine();
-	~DecoderEngine();
+	CDecoderEngine();
+	~CDecoderEngine();
 
 	// initialize the encoder with the quantization and compression methods, and set the number of 
 	// quantization levels, dimensions of the input sequence
@@ -14,5 +14,8 @@ public:
 
 	// decode the input sequence.
 	int Decode(uint8_t *auiInput, float *afqParams, uint32_t row, uint32_t col);
+
+private:
+	void DecodeRawBinarySequence();
 };
 

@@ -13,12 +13,15 @@ public:
 
 	// encode the input 2D sequence. each row of input is quantized separately, but the entire 
 	// sequence is encoded together.
-	int Encode(float *afInput, uint32_t row, uint32_t col);
+	int Encode(float *afInput, float *afResidue, uint32_t row, uint32_t col);
 
 private:
-	int Quantize(float *afInput, uint32_t row, uint32_t col);
-	int Compress(uint32_t row, uint32_t col);
+	int Quantize(float *afInput, float *afResidue, uint32_t row, uint32_t col);
+	int Compress();
 
+	void GenerateRawBinarySequence();
+
+	void UpdateDitherSeed();
 
 	CompressionMethod  m_cMethod;
 	QuantizationMethod m_qMethod;

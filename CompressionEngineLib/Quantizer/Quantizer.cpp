@@ -54,7 +54,7 @@ inline float DequantizeValue(uint8_t uiQ, float &fFirstBin, float &fStepSize)
 	return fFirstBin + fStepSize * uiQ;
 }
 
-void DitheredQuantizer(float *afInput, float &fMinValue, float &fStepSize, uint8_t uiMaxQ, uint32_t uiLen, uint32_t &seed, uint8_t *abtQ)
+void DitheredQuantizer(float *afInput, float &fMinValue, float &fStepSize, uint8_t uiMaxQ, uint32_t uiLen, uint32_t seed, uint8_t *abtQ)
 {
 	// uniform noise generatation
 	std::mt19937 mt(seed);
@@ -64,12 +64,9 @@ void DitheredQuantizer(float *afInput, float &fMinValue, float &fStepSize, uint8
 	// the quantizer function
 	auto quantizer = std::bind(QuantizeValue, std::placeholders::_1, fMinValue, fStepSize, uiMaxQ);
 	std::transform(afInput, afInput + uiLen, abtQ, [&](float &x)->uint8_t {return  quantizer(x + genNoise()); });
-
-	// update seed
-	seed = uint32_t((genNoise() + fStepSize / 2) / fStepSize * (UINT32_MAX - 1));
 }
 
-void DitheredDequantizer(uint8_t *abtQ, float &fMinValue, float &fStepSize, uint8_t uiLen, uint32_t &seed, float *afOutput)
+void DitheredDequantizer(uint8_t *abtQ, float &fMinValue, float &fStepSize, uint8_t uiLen, uint32_t seed, float *afOutput)
 {
 	// uniform noise generatation
 	std::mt19937 mt(seed);
@@ -81,9 +78,6 @@ void DitheredDequantizer(uint8_t *abtQ, float &fMinValue, float &fStepSize, uint
 	// the dequantizer function
 	auto dequantizer = std::bind(DequantizeValue, std::placeholders::_1, fFirstBin, fStepSize);
 	std::transform(abtQ, abtQ + uiLen, afOutput, [&](uint8_t &q)->float {return (dequantizer(q) - genNoise()); });
-
-	// update seed
-	seed = uint32_t((genNoise() + fStepSize / 2) / fStepSize * (UINT32_MAX - 1));
 }
 
 void UniformQuantizer(float *afInput, float &fMinValue, float &fStepSize, uint8_t uiMaxQ, uint32_t uiLen, uint8_t *abtQ)
