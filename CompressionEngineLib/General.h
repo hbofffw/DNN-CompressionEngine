@@ -23,3 +23,6 @@ enum QuantizationMethod {
 	Uniform,  // uniform quantization, minimum value and step size are provided
 	Dithered  // uniform quantization with dithered noise
 };
+
+typedef std::vector<std::vector<uint32_t>> LDPC_Matrix;
+typedef std::vector<std::vector<uint8_t>>  LDPC_Values;

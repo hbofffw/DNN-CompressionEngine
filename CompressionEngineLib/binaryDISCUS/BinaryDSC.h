@@ -22,6 +22,6 @@ private:
 	std::vector<CBinaryVariableNode> m_aVariableNodes;
 
 	// the sparse matrix, used for encoding
-	std::vector<std::vector<uint32_t>> m_uiSparseH;
+	LDPC_Matrix m_uiSparseH;
 };
 

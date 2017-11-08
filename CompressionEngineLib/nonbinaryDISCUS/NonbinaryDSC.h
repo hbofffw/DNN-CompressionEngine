@@ -27,7 +27,7 @@ private:
 	std::vector<CVariableNode> m_aVariableNodes;
 
 	// the sparse matrix, used for encoding
-	std::vector<std::vector<uint32_t>>  m_uiSparseEntry;
-	std::vector<std::vector<uint8_t>> m_dtSparseValues;
+	LDPC_Matrix m_uiSparseEntry;
+	LDPC_Values m_dtSparseValues;
 };
 
