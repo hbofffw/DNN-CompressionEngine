@@ -16,8 +16,6 @@ public:
 	}
 
 private:
-	void ReleaseMemory();
-
 	uint32_t m_uiQ;
 
 	uint8_t*  m_aLogQ;

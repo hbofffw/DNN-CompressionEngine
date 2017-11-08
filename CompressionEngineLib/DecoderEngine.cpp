@@ -13,21 +13,9 @@ CDecoderEngine::~CDecoderEngine()
 {
 }
 
-uint32_t CDecoderEngine::Initialize(CompressionMethod cMethod, QuantizationMethod qMethod, uint8_t uiQLevels, uint32_t uiRow, uint32_t uiCol, uint32_t uiInitialSeed)
+int CDecoderEngine::Initialize(uint32_t uiRow, uint32_t uiCol, uint32_t uiInitialSeed)
 {
-	m_cMethod = cMethod;
-	m_qMethod = qMethod;
-	m_uiQLevel = uiQLevels;
 	m_uiSeed = uiInitialSeed;
-
-	if (m_qMethod == QuantizationMethod::Binary)
-		m_uiAlphabet = 2;
-	else
-		// if using DISCUS, make sure the alphabet size is a power of 2 for fast implementations
-		if (m_cMethod == CompressionMethod::DISCUS)
-			m_uiAlphabet = 1 << uint8_t(ceil(log2(m_uiQLevel)));
-		else
-			m_uiAlphabet = m_uiQLevel;
 
 	m_uiMaxRowNum = uiRow;
 	m_uiMaxColNum = uiCol;
@@ -37,6 +25,66 @@ uint32_t CDecoderEngine::Initialize(CompressionMethod cMethod, QuantizationMetho
 
 	m_qParams.reserve(2 * m_uiMaxRowNum);
 	m_decoded.reserve(m_uiMaxRowNum * m_uiMaxColNum);
+
+	m_abinaryDSC.clear();
+	m_anonbinaryDSC.clear();
+
+	return 0;
+}
+
+int CDecoderEngine::InitializeDISCUSDecoder(std::vector<LDPC_Matrix> H)
+{
+	m_abinaryDSC.resize(H.size(), CBinaryDSC());
+
+	//FACTOR_GRAPH g;
+	//for (size_t n = 0; n < H.size(); n++)
+	//	m_abinaryDSC[n].InitializeGraph()
+	return 0;
+}
+
+int CDecoderEngine::InitializeDISCUSDecoder(std::vector<LDPC_Matrix> H, std::vector<LDPC_Values> V)
+{
+	if (H.size() != V.size())
+		return -1;
+
+	m_anonbinaryDSC.resize(H.size(), CNonbinaryDSC());
+	//for (size_t n = 0; n < H.size(); n++)
+	//	m_anonbinaryDSC[n].InitializeGraph()
+
+	return 0;
+}
+
+int CDecoderEngine::SetMethod(CompressionMethod cMethod, QuantizationMethod qMethod, uint8_t uiQLevels, uint8_t dsc)
+{
+	m_cMethod = cMethod;
+	m_qMethod = qMethod;
+	m_uiQLevel = uiQLevels;
+	m_uiDSCIdx = dsc;
+
+	if (m_qMethod == QuantizationMethod::Binary) {
+		m_uiAlphabet = 2;
+		m_uiQLevel = 2;
+	}
+	else {
+		// if using DISCUS, make sure the alphabet size is a power of 2 for fast implementations
+		if (m_cMethod == CompressionMethod::DISCUS) {
+			m_uiAlphabet = 1 << uint8_t(ceil(log2(m_uiQLevel)));
+			if (m_uiAlphabet == 2)
+				if (m_abinaryDSC.empty()) {
+					return -1;
+
+					m_uiDSCIdx = __min(m_uiDSCIdx, m_abinaryDSC.size() - 1);
+				}
+				else {
+					if (m_anonbinaryDSC.empty())
+						return -2;
+
+					m_uiDSCIdx = __min(m_uiDSCIdx, m_anonbinaryDSC.size() - 1);
+				}
+		}
+		else
+			m_uiAlphabet = m_uiQLevel;
+	}
 
 	return 0;
 }
@@ -110,10 +158,10 @@ uint32_t CDecoderEngine::Decompress()
 {
 	m_uiCodeLen = 0;
 	if (m_cMethod == CompressionMethod::Raw) {
-		DecodeRawBinarySequence();
+		RawBinaryDecoder();
 	}
 	else if (m_cMethod == CompressionMethod::FAC) {
-
+		FixedArithmeticDecoder();
 	}
 	else if (m_cMethod == CompressionMethod::AAC) {
 		AdaptiveArithmeticDecoder();
@@ -127,7 +175,7 @@ uint32_t CDecoderEngine::Decompress()
 	return m_uiCodeLen;
 }
 
-uint32_t CDecoderEngine::DecodeRawBinarySequence()
+uint32_t CDecoderEngine::RawBinaryDecoder()
 {
 	uint8_t bpq = (uint8_t)ceil(log2(m_uiQLevel));
 	int8_t bitPosition;
@@ -154,13 +202,40 @@ uint32_t CDecoderEngine::DecodeRawBinarySequence()
 		m_decoded[n] = q;
 
 		bitPosition -= bpq;
-		if (bitPosition <= 0) {
+		if (bitPosition < 0) {
 			bitPosition += 8;
 			idx++;
 		}
 	}
 
 	return n;
+}
+
+uint32_t CDecoderEngine::FixedArithmeticDecoder()
+{
+	uint32_t decLen;
+
+	// first, copy the quantization parameters
+	m_qParams.resize(m_uiRowNum);
+	decLen = m_qParams.size() * sizeof(float);
+	memcpy_s(m_qParams.data(), decLen, m_auiCode, decLen);
+
+	uint32_t *pFreq;
+	CFrequencyTable freqTable;
+	CArithmeticDecoder decoder;
+
+	pFreq = reinterpret_cast<uint32_t *> (&m_auiCode[decLen]);
+	freqTable.Initialize(pFreq, m_uiAlphabet);
+
+	decLen += (m_uiAlphabet * sizeof(uint32_t));
+	decoder.Initialize(&m_auiCode[decLen], m_uiCodeLen - decLen);
+
+	decLen = m_uiRowNum * m_uiColNum;
+	m_decoded.resize(decLen);
+	for (uint32_t n = 0; n < decLen; n++)
+		m_decoded[n] = decoder.Decode(freqTable);
+
+	return decLen;
 }
 
 uint32_t CDecoderEngine::AdaptiveArithmeticDecoder()
@@ -186,4 +261,27 @@ uint32_t CDecoderEngine::AdaptiveArithmeticDecoder()
 	}
 
 	return decLen;
+}
+
+uint32_t CDecoderEngine::DISCUSDecoder()
+{
+	m_decoded.resize(m_uiRowNum * m_uiColNum);
+
+	// first, copy the quantization parameters
+	memcpy_s(m_qParams.data(), m_uiRowNum * sizeof(float), m_auiCode, m_uiRowNum * sizeof(float));
+
+	if (m_uiAlphabet == 2)
+		m_uiCodeLen += BinaryDISCUSDecoder(&m_auiCode[m_uiCodeLen]);
+	else
+		m_uiCodeLen += NonbinaryDISCUSDecoder(&m_auiCode[m_uiCodeLen]);
+}
+
+uint32_t CDecoderEngine::BinaryDISCUSDecoder(uint8_t *code)
+{
+	return 0;
+}
+
+uint32_t CDecoderEngine::NonbinaryDISCUSDecoder(uint8_t *code)
+{
+	return 0;
 }

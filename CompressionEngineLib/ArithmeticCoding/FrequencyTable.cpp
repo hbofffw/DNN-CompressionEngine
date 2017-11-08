@@ -23,7 +23,7 @@ void CFrequencyTable::Initialize(uint8_t uiAlphabetSize)
 	UpdateCDF();
 }
 
-void CFrequencyTable::Initialize(uint64_t *pFreq, uint8_t uiAlphabetSize)
+void CFrequencyTable::Initialize(uint32_t *pFreq, uint8_t uiAlphabetSize)
 {
 	m_uiAlphabetSize = uiAlphabetSize;
 	m_aFreqs.resize(uiAlphabetSize, 1);
@@ -40,7 +40,7 @@ CFrequencyTable& CFrequencyTable::operator=(CFrequencyTable &table)
 		return *this;
 
 	uint8_t  uiAlphabet;
-	uint64_t *pFreq;
+	uint32_t *pFreq;
 
 	uiAlphabet = table.GetAlphabetSize();
 	pFreq = table.GetFrequencyTable();
@@ -48,13 +48,6 @@ CFrequencyTable& CFrequencyTable::operator=(CFrequencyTable &table)
 
 	return *this;
 }
-
-//uint8_t CFrequencyTable::GetFrequencyTable(uint64_t* &pFreq)
-//{
-//	pFreq = m_aFreqs.data();
-//
-//	return m_uiAlphabetSize;
-//}
 
 void CFrequencyTable::UpdateCDF()
 {
